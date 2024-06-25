@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="3. BayesPrism for our simulation data | Report of BayesPrism Model" />
+<meta property="og:type" content="book" />
+
+<meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+<meta name="github-repo" content="rstudio/bookdown-demo" />
+
+<meta name="author" content="Xiangya Wang" />
+
+<meta name="date" content="2024-06-22" />
+
+
+<meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>">
+
+<title>3. BayesPrism for our simulation data | Report of BayesPrism Model</title>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+/* show arrow before summary tag as in bootstrap
+TODO: remove if bootstrap in updated in html_document (rmarkdown#1485) */
+details > summary {
+  display: list-item;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#brief-introduction-to-bayesprism" id="toc-brief-introduction-to-bayesprism">1. Brief introduction to BayesPrism</a></li>
+<li class="has-sub"><a href="an-example-of-using-bayesprism.html#an-example-of-using-bayesprism" id="toc-an-example-of-using-bayesprism">2. An example of using BayesPrism</a>
+<ul>
+<li><a href="an-example-of-using-bayesprism.html#the-high-grade-glioma-dataset" id="toc-the-high-grade-glioma-dataset">2.1 The high-grade glioma dataset</a></li>
+<li><a href="an-example-of-using-bayesprism.html#filter-outlier-genes" id="toc-filter-outlier-genes">2.2 Filter outlier genes</a></li>
+<li><a href="an-example-of-using-bayesprism.html#construct-prism-object" id="toc-construct-prism-object">2.3 Construct Prism object</a></li>
+<li><a href="an-example-of-using-bayesprism.html#run-bayesprism-model" id="toc-run-bayesprism-model">2.4 Run BayesPrism model</a></li>
+</ul></li>
+<li class="has-sub"><a href="bayesprism-for-our-simulation-data.html#bayesprism-for-our-simulation-data" id="toc-bayesprism-for-our-simulation-data">3. BayesPrism for our simulation data</a>
+<ul>
+<li><a href="bayesprism-for-our-simulation-data.html#data-from-simulation" id="toc-data-from-simulation">3.1 Data from simulation</a></li>
+<li><a href="bayesprism-for-our-simulation-data.html#run-bayesprism-mdoel" id="toc-run-bayesprism-mdoel">3.2 Run BayesPrism mdoel</a></li>
+<li><a href="bayesprism-for-our-simulation-data.html#analyzing-the-results" id="toc-analyzing-the-results">3.3 Analyzing the results</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="bayesprism-for-our-simulation-data" class="section level2">
+<h2>3. BayesPrism for our simulation data</h2>
+<div id="data-from-simulation" class="section level3">
+<h3>3.1 Data from simulation</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="bayesprism-for-our-simulation-data.html#cb26-1" tabindex="-1"></a>bulk <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../Exp_receiver.csv&#39;</span>)</span>
+<span id="cb26-2"><a href="bayesprism-for-our-simulation-data.html#cb26-2" tabindex="-1"></a><span class="fu">head</span>(bulk)</span></code></pre></div>
+<pre><code>##           X0         X1         X2         X3         X4         X5         X6
+## 1 0.06857624 0.08774683 0.07738427 0.08373754 0.05554544 0.08636045 0.04620766
+## 2 0.04070540 0.04041274 0.04893307 0.04823350 0.05993432 0.07538757 0.07770301
+## 3 0.04647331 0.05829667 0.05954375 0.07038186 0.08019970 0.07772373 0.07755359
+## 4 0.04729503 0.05914761 0.08345709 0.05127898 0.09462003 0.07390279 0.09660709
+## 5 0.04738280 0.08847343 0.05502202 0.08905367 0.05552012 0.05472508 0.04549275
+## 6 0.06406156 0.07620940 0.06061760 0.03595703 0.09008454 0.03832207 0.08998896
+##           X7         X8         X9
+## 1 0.03602030 0.05148088 0.04343077
+## 2 0.07764927 0.04285996 0.06558569
+## 3 0.05338053 0.03948842 0.08908520
+## 4 0.03975106 0.06670651 0.08440976
+## 5 0.06192449 0.08781556 0.05720318
+## 6 0.08819346 0.08630481 0.08719826</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="bayesprism-for-our-simulation-data.html#cb28-1" tabindex="-1"></a>scRNA <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../Exp_sender_ori.csv&#39;</span>)</span>
+<span id="cb28-2"><a href="bayesprism-for-our-simulation-data.html#cb28-2" tabindex="-1"></a><span class="fu">head</span>(scRNA)</span></code></pre></div>
+<pre><code>##            X0          X1         X2          X3         X4          X5
+## 1 0.062127798 0.094078786 0.07680786 0.087396639 0.04040979 0.091768141
+## 2 0.007885108 0.007397329 0.02159789 0.020431939 0.03993329 0.065688712
+## 3 0.013048505 0.032754108 0.03483257 0.052896088 0.06925915 0.065132539
+## 4 0.016155529 0.035909814 0.07642562 0.022795444 0.09503052 0.060501785
+## 5 0.029384690 0.097869085 0.04211672 0.098836142 0.04294689 0.041621825
+## 6 0.052885597 0.073131996 0.04714566 0.006044725 0.09625723 0.009986453
+##           X6          X7          X8         X9 cell_type
+## 1 0.02484683 0.007867895 0.033635526 0.02021868  original
+## 2 0.06954779 0.069458220 0.011476031 0.04935225  original
+## 3 0.06484898 0.024560542 0.001407017 0.08406833  original
+## 4 0.09834229 0.003582245 0.048507988 0.07801340  original
+## 5 0.02623461 0.053620840 0.096772633 0.04575199  original
+## 6 0.09609793 0.093105434 0.089957682 0.09144676  original</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="bayesprism-for-our-simulation-data.html#cb30-1" tabindex="-1"></a>cell_type <span class="ot">&lt;-</span> scRNA<span class="sc">$</span>cell_type</span>
+<span id="cb30-2"><a href="bayesprism-for-our-simulation-data.html#cb30-2" tabindex="-1"></a>scRNA <span class="ot">&lt;-</span> scRNA[, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb30-3"><a href="bayesprism-for-our-simulation-data.html#cb30-3" tabindex="-1"></a><span class="fu">head</span>(scRNA)</span></code></pre></div>
+<pre><code>##            X0          X1         X2          X3         X4          X5
+## 1 0.062127798 0.094078786 0.07680786 0.087396639 0.04040979 0.091768141
+## 2 0.007885108 0.007397329 0.02159789 0.020431939 0.03993329 0.065688712
+## 3 0.013048505 0.032754108 0.03483257 0.052896088 0.06925915 0.065132539
+## 4 0.016155529 0.035909814 0.07642562 0.022795444 0.09503052 0.060501785
+## 5 0.029384690 0.097869085 0.04211672 0.098836142 0.04294689 0.041621825
+## 6 0.052885597 0.073131996 0.04714566 0.006044725 0.09625723 0.009986453
+##           X6          X7          X8         X9
+## 1 0.02484683 0.007867895 0.033635526 0.02021868
+## 2 0.06954779 0.069458220 0.011476031 0.04935225
+## 3 0.06484898 0.024560542 0.001407017 0.08406833
+## 4 0.09834229 0.003582245 0.048507988 0.07801340
+## 5 0.02623461 0.053620840 0.096772633 0.04575199
+## 6 0.09609793 0.093105434 0.089957682 0.09144676</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="bayesprism-for-our-simulation-data.html#cb32-1" tabindex="-1"></a>type_original <span class="ot">&lt;-</span> <span class="fu">length</span>(cell_type[cell_type <span class="sc">==</span> <span class="st">&#39;original&#39;</span>]) <span class="co"># 1126 </span></span>
+<span id="cb32-2"><a href="bayesprism-for-our-simulation-data.html#cb32-2" tabindex="-1"></a>type_1 <span class="ot">&lt;-</span> <span class="fu">length</span>(cell_type[cell_type <span class="sc">==</span> <span class="st">&#39;type 1&#39;</span>]) <span class="co"># 1587</span></span>
+<span id="cb32-3"><a href="bayesprism-for-our-simulation-data.html#cb32-3" tabindex="-1"></a>type_2 <span class="ot">&lt;-</span> <span class="fu">length</span>(cell_type[cell_type <span class="sc">==</span> <span class="st">&#39;type 2&#39;</span>]) <span class="co"># 2139</span></span>
+<span id="cb32-4"><a href="bayesprism-for-our-simulation-data.html#cb32-4" tabindex="-1"></a>type_3 <span class="ot">&lt;-</span> <span class="fu">length</span>(cell_type[cell_type <span class="sc">==</span> <span class="st">&#39;type 3&#39;</span>]) <span class="co"># 2742</span></span>
+<span id="cb32-5"><a href="bayesprism-for-our-simulation-data.html#cb32-5" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="bayesprism-for-our-simulation-data.html#cb32-6" tabindex="-1"></a>cell_state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&#39;000&#39;</span>, type_original), <span class="fu">rep</span>(<span class="st">&#39;111&#39;</span>, type_1), <span class="fu">rep</span>(<span class="st">&#39;222&#39;</span>, type_2), </span>
+<span id="cb32-7"><a href="bayesprism-for-our-simulation-data.html#cb32-7" tabindex="-1"></a>                <span class="fu">rep</span>(<span class="st">&#39;333&#39;</span>, type_3))</span></code></pre></div>
+<p>Through the simulation, we have three matrices:</p>
+<ul>
+<li>XY matrix (X, Y coordinates for each sender cell and receiver cell)</li>
+<li>sender gene expressions for three sender cell types (# of cells by 10 genes)</li>
+<li>receiver gene expressions for receiver cells (# of cells by 1 gene)</li>
+</ul>
+<p>And the number of cells for receiver and each sender:</p>
+<ul>
+<li>receiver cell (1126 cells)</li>
+<li>sender cell of type 1 (1587 cells)</li>
+<li>sender cell of type 2 (2139 cells)</li>
+<li>sender cell of type 3 (2742 cells)</li>
+</ul>
+<p>Since receiver gene expression are constructed by a linear combination of sender gene expression and original receiver gene expression, we can consider sender and original receiver gene expression as single cell RNA sequencing (scRNA_seq) which is the parameter <em>reference</em> in BayesPrism model. And the receiver gene expression is thought of as bulk sample which is the parameter <em>maxture</em> in the model.</p>
+<p>But in BayesPrism mdoel, the scRNA_seq and bulk sample need same number of genes (columns). The gene expression of sender cells have 10 genes while the receiver gene expression only has one gene. Hence, I adjusted the simulation code to produce 10 genes for receiver cells.</p>
+<p>At last, we need to find two parameters <em>cell.type.labels</em> and <em>cell.states.labels</em>. According to BayesPrism model, we first have cell type, then implement some clustering algorithms to group cells for each cell type. Since for simulation data, our attention is to see the proportion of cell types not related to subtypes (cell states), I simply take each cell type as one state. So each cell type itself is a cell state. Now we find all the four parameters for BayesPrism: <em>reference</em>, <em>cell.type.labels</em>, <em>cell.state.labels</em>, <em>mixture</em>.</p>
+</div>
+<div id="run-bayesprism-mdoel" class="section level3">
+<h3>3.2 Run BayesPrism mdoel</h3>
+<p>From the last section, we know the <em>reference</em> parameter in the model has two options, one is count matrix of reads for genes, and another is GEP (Gene Expression Profile). Both of them are required to be positive. However, our sender gene expression are generated from multivariate normal distribution with mean 0 and covariance between 0.9 and 0.99. You can see the minimum of sender gene expression in the code below. Some of sender gene expression will be negative. Therefore, I make a linear transformation to both scRNA_seq and bulk sample due to the recommendation in the package introduction that the two matrix should have same transformation.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="bayesprism-for-our-simulation-data.html#cb33-1" tabindex="-1"></a><span class="fu">min</span>(scRNA)</span>
+<span id="cb33-2"><a href="bayesprism-for-our-simulation-data.html#cb33-2" tabindex="-1"></a><span class="fu">max</span>(scRNA)</span></code></pre></div>
+<pre><code>## [1] -3.022393
+## [1] 6.87127</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="bayesprism-for-our-simulation-data.html#cb35-1" tabindex="-1"></a><span class="co"># apply linear transformation to scRNA in order to convert negative values to positive</span></span>
+<span id="cb35-2"><a href="bayesprism-for-our-simulation-data.html#cb35-2" tabindex="-1"></a><span class="co"># transformation model: 10x + 50</span></span>
+<span id="cb35-3"><a href="bayesprism-for-our-simulation-data.html#cb35-3" tabindex="-1"></a>scRNA_transformed <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">*</span> scRNA <span class="sc">+</span> <span class="dv">50</span></span>
+<span id="cb35-4"><a href="bayesprism-for-our-simulation-data.html#cb35-4" tabindex="-1"></a>bulk_transformed <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">*</span> bulk <span class="sc">+</span> <span class="dv">50</span></span>
+<span id="cb35-5"><a href="bayesprism-for-our-simulation-data.html#cb35-5" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="bayesprism-for-our-simulation-data.html#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="bayesprism-for-our-simulation-data.html#cb35-7" tabindex="-1"></a>prism <span class="ot">&lt;-</span> <span class="fu">new.prism</span>(<span class="at">reference =</span> scRNA_transformed, <span class="at">input.type =</span> <span class="st">&#39;GEP&#39;</span>, </span>
+<span id="cb35-8"><a href="bayesprism-for-our-simulation-data.html#cb35-8" tabindex="-1"></a>                   <span class="at">cell.type.labels =</span> cell_type,</span>
+<span id="cb35-9"><a href="bayesprism-for-our-simulation-data.html#cb35-9" tabindex="-1"></a>                   <span class="at">cell.state.labels =</span> cell_state, <span class="at">key =</span> <span class="cn">NULL</span>, </span>
+<span id="cb35-10"><a href="bayesprism-for-our-simulation-data.html#cb35-10" tabindex="-1"></a>                   <span class="at">mixture =</span>bulk_transformed,</span>
+<span id="cb35-11"><a href="bayesprism-for-our-simulation-data.html#cb35-11" tabindex="-1"></a>                   <span class="at">outlier.cut =</span> <span class="fl">0.0</span>, <span class="at">outlier.fraction =</span> <span class="fl">3.0</span>)</span>
+<span id="cb35-12"><a href="bayesprism-for-our-simulation-data.html#cb35-12" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="bayesprism-for-our-simulation-data.html#cb35-13" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">run.prism</span>(prism, <span class="at">n.cores =</span> <span class="dv">4</span>)</span></code></pre></div>
+</div>
+<div id="analyzing-the-results" class="section level3">
+<h3>3.3 Analyzing the results</h3>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="bayesprism-for-our-simulation-data.html#cb36-1" tabindex="-1"></a><span class="fu">slotNames</span>(result)</span></code></pre></div>
+<pre><code>## [1] &quot;prism&quot;                       &quot;posterior.initial.cellState&quot;
+## [3] &quot;posterior.initial.cellType&quot;  &quot;reference.update&quot;           
+## [5] &quot;posterior.theta_f&quot;           &quot;control_param&quot;</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="bayesprism-for-our-simulation-data.html#cb38-1" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">get.fraction</span> (<span class="at">bp=</span>result,</span>
+<span id="cb38-2"><a href="bayesprism-for-our-simulation-data.html#cb38-2" tabindex="-1"></a>            <span class="at">which.theta=</span><span class="st">&quot;final&quot;</span>,</span>
+<span id="cb38-3"><a href="bayesprism-for-our-simulation-data.html#cb38-3" tabindex="-1"></a>            <span class="at">state.or.type=</span><span class="st">&quot;type&quot;</span>)</span>
+<span id="cb38-4"><a href="bayesprism-for-our-simulation-data.html#cb38-4" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="bayesprism-for-our-simulation-data.html#cb38-5" tabindex="-1"></a><span class="fu">head</span>(theta)</span></code></pre></div>
+<pre><code>##     original    type 1   type 2    type 3
+## 1 0.04940759 0.3277912 0.314304 0.3084971
+## 2 0.04940759 0.3277912 0.314304 0.3084971
+## 3 0.04940759 0.3277912 0.314304 0.3084971
+## 4 0.04940759 0.3277912 0.314304 0.3084971
+## 5 0.04940759 0.3277912 0.314304 0.3084971
+## 6 0.04940759 0.3277912 0.314304 0.3084971</code></pre>
+<p>All rows are the same in the result above that’s because each receiver gene expression are obtained through the same way in simulation. We can see that the proportion of gene expression from the original receiver cells is very small compared to other three types of sender cells. I don’t quite understand why the proportion of original gene expression is very small. But one possible reason may be related to values of original gene expression. Original gene expression are produced by uniform distribution from the range 0 to 0.1. The maximum is 0.1. Below the code show the original gene expression is quite small, comparing with values of sender gene expression.</p>
+<p>And another possible problem of BayesPrism is that it doesn’t take into account relative location between sender cell types and receiver cell types. Since the goal of the model is to find cell type composition and cell type-specific gene expression from bulk samples like from a tissue, the model doesn’t use distance data.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="bayesprism-for-our-simulation-data.html#cb40-1" tabindex="-1"></a>ori <span class="ot">&lt;-</span> scRNA[cell_type <span class="sc">==</span> <span class="st">&#39;original&#39;</span>, ]</span>
+<span id="cb40-2"><a href="bayesprism-for-our-simulation-data.html#cb40-2" tabindex="-1"></a><span class="fu">head</span>(ori)</span></code></pre></div>
+<pre><code>##            X0          X1         X2          X3         X4          X5
+## 1 0.062127798 0.094078786 0.07680786 0.087396639 0.04040979 0.091768141
+## 2 0.007885108 0.007397329 0.02159789 0.020431939 0.03993329 0.065688712
+## 3 0.013048505 0.032754108 0.03483257 0.052896088 0.06925915 0.065132539
+## 4 0.016155529 0.035909814 0.07642562 0.022795444 0.09503052 0.060501785
+## 5 0.029384690 0.097869085 0.04211672 0.098836142 0.04294689 0.041621825
+## 6 0.052885597 0.073131996 0.04714566 0.006044725 0.09625723 0.009986453
+##           X6          X7          X8         X9
+## 1 0.02484683 0.007867895 0.033635526 0.02021868
+## 2 0.06954779 0.069458220 0.011476031 0.04935225
+## 3 0.06484898 0.024560542 0.001407017 0.08406833
+## 4 0.09834229 0.003582245 0.048507988 0.07801340
+## 5 0.02623461 0.053620840 0.096772633 0.04575199
+## 6 0.09609793 0.093105434 0.089957682 0.09144676</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="bayesprism-for-our-simulation-data.html#cb42-1" tabindex="-1"></a>cell_type_1 <span class="ot">&lt;-</span> scRNA[cell_type <span class="sc">==</span> <span class="st">&#39;type 1&#39;</span>, ]</span>
+<span id="cb42-2"><a href="bayesprism-for-our-simulation-data.html#cb42-2" tabindex="-1"></a><span class="fu">head</span>(cell_type_1)</span></code></pre></div>
+<pre><code>##              X0         X1         X2         X3         X4          X5
+## 1127  0.9638958  1.0726707  0.9534466  1.3766677  0.9522705  0.09539216
+## 1128  1.0852533  1.2676541  1.4475436  1.5747020  1.3121522  0.17265405
+## 1129  1.3377911  1.1212351  1.2361794  0.9994742  0.8585064  0.75349373
+## 1130  0.8286100  0.1465449  0.5554723  0.3901714  0.7454858  0.95867110
+## 1131  0.7476213  0.9487763  1.0592167  0.9895673  0.7112739 -0.01500347
+## 1132 -0.3147954 -0.6976300 -0.2159419 -1.1674663 -0.7186460  0.01925320
+##              X6         X7         X8          X9
+## 1127 -0.1336803 -0.1818581  0.5560047  0.44665644
+## 1128  0.5173514  0.1844913  0.2818102  0.04298592
+## 1129  0.8760944  0.7370643  0.8582986  0.53230294
+## 1130  0.8678081  0.8634881  1.0292014  0.12921646
+## 1131  0.2587279  0.2557631 -0.1473256 -0.37751850
+## 1132  0.4113653  0.2423098  0.6142980  0.76090052</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="bayesprism-for-our-simulation-data.html#cb44-1" tabindex="-1"></a>cell_type_2 <span class="ot">&lt;-</span> scRNA[cell_type <span class="sc">==</span> <span class="st">&#39;type 2&#39;</span>,]</span>
+<span id="cb44-2"><a href="bayesprism-for-our-simulation-data.html#cb44-2" tabindex="-1"></a><span class="fu">head</span>(cell_type_2)</span></code></pre></div>
+<pre><code>##            X0       X1       X2       X3       X4         X5         X6
+## 2714 1.936704 2.193596 2.190535 2.302095 1.765143  3.3784810  2.8093241
+## 2715 1.487790 1.799074 2.014860 1.959843 2.045499 -0.2140539 -0.3803371
+## 2716 1.410108 1.480174 1.714265 1.516665 1.569258  2.3908914  2.2354474
+## 2717 3.810088 3.707664 3.790480 3.966265 3.862638  1.8380913  1.8876676
+## 2718 1.743079 1.773799 1.879173 1.635049 1.946724  3.2339435  3.6924447
+## 2719 1.878551 1.781885 1.406710 1.442645 2.124239  2.4364036  2.5878810
+##              X7        X8         X9
+## 2714  2.9691888  2.801595  2.6998360
+## 2715 -0.3909242 -0.482424 -0.2978161
+## 2716  1.9666362  2.250728  2.2163288
+## 2717  2.1579128  1.908236  1.7681693
+## 2718  3.2714188  3.286845  3.2296780
+## 2719  2.5877541  1.983671  2.6979169</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="bayesprism-for-our-simulation-data.html#cb46-1" tabindex="-1"></a>cell_type_3 <span class="ot">&lt;-</span> scRNA[cell_type <span class="sc">==</span> <span class="st">&#39;type 3&#39;</span>, ]</span>
+<span id="cb46-2"><a href="bayesprism-for-our-simulation-data.html#cb46-2" tabindex="-1"></a><span class="fu">head</span>(cell_type_3)</span></code></pre></div>
+<pre><code>##            X0       X1       X2       X3       X4       X5       X6       X7
+## 4853 2.244730 1.722212 1.765709 2.063748 1.589890 2.175990 2.397291 2.726935
+## 4854 2.698678 2.978208 2.853463 2.434152 2.741681 3.608810 4.015664 3.734081
+## 4855 3.017757 2.990206 2.953122 2.768867 3.373987 2.735054 2.736819 2.680403
+## 4856 1.783233 1.787208 1.652872 1.893624 2.264755 2.932841 2.971866 2.696734
+## 4857 3.846126 3.051206 2.897104 3.533049 4.023384 1.835576 2.075697 2.057268
+## 4858 2.068724 2.265319 1.820284 2.489182 2.587172 3.148099 3.181320 3.106771
+##            X8       X9
+## 4853 2.023692 1.654029
+## 4854 3.748499 4.208946
+## 4855 2.538182 3.008422
+## 4856 2.734654 2.498942
+## 4857 1.545965 1.850042
+## 4858 3.142201 3.321022</code></pre>
+
+</div>
+</div>
+<p style="text-align: center;">
+<a href="an-example-of-using-bayesprism.html"><button class="btn btn-default">Previous</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

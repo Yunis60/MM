@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="2. An example of using BayesPrism | Report of BayesPrism Model" />
+<meta property="og:type" content="book" />
+
+<meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>" />
+<meta name="github-repo" content="rstudio/bookdown-demo" />
+
+<meta name="author" content="Xiangya Wang" />
+
+<meta name="date" content="2024-06-22" />
+
+
+<meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+The HTML output format for this example is bookdown::gitbook,
+set in the _output.yml file.</p>">
+
+<title>2. An example of using BayesPrism | Report of BayesPrism Model</title>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+/* show arrow before summary tag as in bootstrap
+TODO: remove if bootstrap in updated in html_document (rmarkdown#1485) */
+details > summary {
+  display: list-item;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#brief-introduction-to-bayesprism" id="toc-brief-introduction-to-bayesprism">1. Brief introduction to BayesPrism</a></li>
+<li class="has-sub"><a href="an-example-of-using-bayesprism.html#an-example-of-using-bayesprism" id="toc-an-example-of-using-bayesprism">2. An example of using BayesPrism</a>
+<ul>
+<li><a href="an-example-of-using-bayesprism.html#the-high-grade-glioma-dataset" id="toc-the-high-grade-glioma-dataset">2.1 The high-grade glioma dataset</a></li>
+<li><a href="an-example-of-using-bayesprism.html#filter-outlier-genes" id="toc-filter-outlier-genes">2.2 Filter outlier genes</a></li>
+<li><a href="an-example-of-using-bayesprism.html#construct-prism-object" id="toc-construct-prism-object">2.3 Construct Prism object</a></li>
+<li><a href="an-example-of-using-bayesprism.html#run-bayesprism-model" id="toc-run-bayesprism-model">2.4 Run BayesPrism model</a></li>
+</ul></li>
+<li class="has-sub"><a href="bayesprism-for-our-simulation-data.html#bayesprism-for-our-simulation-data" id="toc-bayesprism-for-our-simulation-data">3. BayesPrism for our simulation data</a>
+<ul>
+<li><a href="bayesprism-for-our-simulation-data.html#data-from-simulation" id="toc-data-from-simulation">3.1 Data from simulation</a></li>
+<li><a href="bayesprism-for-our-simulation-data.html#run-bayesprism-mdoel" id="toc-run-bayesprism-mdoel">3.2 Run BayesPrism mdoel</a></li>
+<li><a href="bayesprism-for-our-simulation-data.html#analyzing-the-results" id="toc-analyzing-the-results">3.3 Analyzing the results</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="an-example-of-using-bayesprism" class="section level2">
+<h2>2. An example of using BayesPrism</h2>
+<div id="the-high-grade-glioma-dataset" class="section level3">
+<h3>2.1 The high-grade glioma dataset</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="an-example-of-using-bayesprism.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(BayesPrism)</span>
+<span id="cb1-2"><a href="an-example-of-using-bayesprism.html#cb1-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&#39;tutorial.gbm.rdata&#39;</span>)</span>
+<span id="cb1-3"><a href="an-example-of-using-bayesprism.html#cb1-3" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;bk.dat&quot;            &quot;cell.state.labels&quot; &quot;cell.type.labels&quot; 
+## [4] &quot;sc.dat&quot;</code></pre>
+<p><em><strong>bk.dat</strong></em> : The sample-by-gene raw count matrix of bulk RNA-seq expression. Rows represent bulk sample IDs, while columns refer to gene names/IDs</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="an-example-of-using-bayesprism.html#cb3-1" tabindex="-1"></a><span class="fu">dim</span>(bk.dat)</span>
+<span id="cb3-2"><a href="an-example-of-using-bayesprism.html#cb3-2" tabindex="-1"></a><span class="fu">dim</span>(sc.dat)</span></code></pre></div>
+<pre><code>## [1]   169 60483
+## [1] 23793 60294</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="an-example-of-using-bayesprism.html#cb5-1" tabindex="-1"></a><span class="co"># to make the dataset smaller</span></span>
+<span id="cb5-2"><a href="an-example-of-using-bayesprism.html#cb5-2" tabindex="-1"></a>bk.dat <span class="ot">&lt;-</span> bk.dat[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ]</span>
+<span id="cb5-3"><a href="an-example-of-using-bayesprism.html#cb5-3" tabindex="-1"></a><span class="fu">dim</span>(bk.dat)</span>
+<span id="cb5-4"><a href="an-example-of-using-bayesprism.html#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="an-example-of-using-bayesprism.html#cb5-5" tabindex="-1"></a>sc.dat <span class="ot">&lt;-</span> sc.dat[<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>, ]</span>
+<span id="cb5-6"><a href="an-example-of-using-bayesprism.html#cb5-6" tabindex="-1"></a><span class="fu">dim</span>(sc.dat)</span></code></pre></div>
+<pre><code>## [1]     5 60483
+## [1]  5000 60294</code></pre>
+<p><em><strong>sc.dat</strong></em>:
+The cell-by-gene raw count matrix of single cell RNA-seq expression. Rows represent cell IDs,
+while columns describe gene names/IDs.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="an-example-of-using-bayesprism.html#cb7-1" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(cell.type.labels))</span></code></pre></div>
+<pre><code>## cell.type.labels
+##       tcell       oligo    pericyte endothelial     myeloid       tumor 
+##          67         160         489         492        2505       20080</code></pre>
+<p><em><strong>cell.type.labels</strong></em> is a character vector of the same length as nrow (sc.dat) to denote the cell type of each cell in the reference.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="an-example-of-using-bayesprism.html#cb9-1" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(cell.state.labels))</span></code></pre></div>
+<pre><code>## cell.state.labels
+## PJ017-tumor-6 PJ032-tumor-5     myeloid_8 PJ032-tumor-4 PJ032-tumor-3 
+##            22            41            49            57            62 
+## PJ017-tumor-5         tcell PJ032-tumor-2 PJ030-tumor-5     myeloid_7 
+##            64            67            72            73            75 
+## PJ035-tumor-8 PJ017-tumor-4 PJ017-tumor-3 PJ017-tumor-2 PJ017-tumor-0 
+##            81            83            89           101           107 
+## PJ017-tumor-1 PJ018-tumor-5     myeloid_6     myeloid_5 PJ035-tumor-7 
+##           107           113           130           141           150 
+##         oligo PJ048-tumor-8 PJ032-tumor-1 PJ032-tumor-0 PJ048-tumor-7 
+##           160           169           171           195           228 
+## PJ025-tumor-9 PJ035-tumor-6 PJ048-tumor-6 PJ016-tumor-6 PJ018-tumor-4 
+##           236           241           244           261           262 
+##     myeloid_4 PJ048-tumor-5 PJ048-tumor-4 PJ016-tumor-5 PJ025-tumor-8 
+##           266           277           303           308           319 
+## PJ048-tumor-3 PJ035-tumor-5 PJ030-tumor-4 PJ018-tumor-3 PJ016-tumor-4 
+##           333           334           348           361           375 
+## PJ025-tumor-7     myeloid_3 PJ035-tumor-4     myeloid_2 PJ025-tumor-6 
+##           381           382           385           386           397 
+## PJ018-tumor-2 PJ030-tumor-3 PJ016-tumor-3 PJ025-tumor-5 PJ030-tumor-2 
+##           403           419           420           421           425 
+## PJ018-tumor-1 PJ035-tumor-3 PJ048-tumor-2 PJ018-tumor-0 PJ048-tumor-1 
+##           429           435           437           444           463 
+## PJ035-tumor-2 PJ035-tumor-1 PJ016-tumor-2 PJ030-tumor-1      pericyte 
+##           471           474           481           482           489 
+##   endothelial PJ035-tumor-0 PJ025-tumor-4     myeloid_1 PJ048-tumor-0 
+##           492           512           523           526           545 
+##     myeloid_0 PJ030-tumor-0 PJ025-tumor-3 PJ016-tumor-1 PJ016-tumor-0 
+##           550           563           601           619           621 
+## PJ025-tumor-2 PJ025-tumor-1 PJ025-tumor-0 
+##           630           941           971</code></pre>
+<p><em><strong>cell.state.labels</strong></em> is a character vector of the same length as nrow (sc.dat) to denote the cell state of each cell in the reference.</p>
+</div>
+<div id="filter-outlier-genes" class="section level3">
+<h3>2.2 Filter outlier genes</h3>
+<p>This step is to filter outlier genes which are often not informative in distinguishing cell types and can be a source of large spurious variance.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="an-example-of-using-bayesprism.html#cb11-1" tabindex="-1"></a>sc.stat <span class="ot">&lt;-</span> <span class="fu">plot.scRNA.outlier</span>(</span>
+<span id="cb11-2"><a href="an-example-of-using-bayesprism.html#cb11-2" tabindex="-1"></a><span class="at">input=</span>sc.dat, <span class="co">#make sure the colnames are gene symbol or ENSMEBL ID</span></span>
+<span id="cb11-3"><a href="an-example-of-using-bayesprism.html#cb11-3" tabindex="-1"></a><span class="at">cell.type.labels=</span>cell.type.labels[<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>],</span>
+<span id="cb11-4"><a href="an-example-of-using-bayesprism.html#cb11-4" tabindex="-1"></a><span class="at">species=</span><span class="st">&quot;hs&quot;</span>, <span class="co">#currently only human(hs) and mouse(mm) annotations are supported</span></span>
+<span id="cb11-5"><a href="an-example-of-using-bayesprism.html#cb11-5" tabindex="-1"></a><span class="at">return.raw=</span><span class="cn">TRUE</span> <span class="co">#return the data used for plotting.</span></span>
+<span id="cb11-6"><a href="an-example-of-using-bayesprism.html#cb11-6" tabindex="-1"></a><span class="co">#pdf.prefix=&quot;gbm.sc.stat&quot; specify pdf.prefix if need to output to pdf</span></span>
+<span id="cb11-7"><a href="an-example-of-using-bayesprism.html#cb11-7" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## EMSEMBLE IDs detected.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="an-example-of-using-bayesprism.html#cb13-1" tabindex="-1"></a>bk.stat <span class="ot">&lt;-</span> <span class="fu">plot.bulk.outlier</span>(</span>
+<span id="cb13-2"><a href="an-example-of-using-bayesprism.html#cb13-2" tabindex="-1"></a><span class="at">bulk.input=</span>bk.dat,<span class="co">#make sure the colnames are gene symbol or ENSMEBL ID</span></span>
+<span id="cb13-3"><a href="an-example-of-using-bayesprism.html#cb13-3" tabindex="-1"></a><span class="at">sc.input=</span>sc.dat, <span class="co">#make sure the colnames are gene symbol or ENSMEBL ID</span></span>
+<span id="cb13-4"><a href="an-example-of-using-bayesprism.html#cb13-4" tabindex="-1"></a><span class="at">cell.type.labels=</span>cell.type.labels[<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>],</span>
+<span id="cb13-5"><a href="an-example-of-using-bayesprism.html#cb13-5" tabindex="-1"></a><span class="at">species=</span><span class="st">&quot;hs&quot;</span>, <span class="co">#currently only human(hs) and mouse(mm) annotations are supported</span></span>
+<span id="cb13-6"><a href="an-example-of-using-bayesprism.html#cb13-6" tabindex="-1"></a><span class="at">return.raw=</span><span class="cn">TRUE</span></span>
+<span id="cb13-7"><a href="an-example-of-using-bayesprism.html#cb13-7" tabindex="-1"></a><span class="co">#pdf.prefix=&quot;gbm.bk.stat&quot; specify pdf.prefix if need to output to pdf</span></span>
+<span id="cb13-8"><a href="an-example-of-using-bayesprism.html#cb13-8" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## EMSEMBLE IDs detected.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="an-example-of-using-bayesprism.html#cb15-1" tabindex="-1"></a><span class="co">#&gt; EMSEMBLE IDs detected.</span></span>
+<span id="cb15-2"><a href="an-example-of-using-bayesprism.html#cb15-2" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-3"><a href="an-example-of-using-bayesprism.html#cb15-3" tabindex="-1"></a>sc.dat.filtered <span class="ot">&lt;-</span> <span class="fu">cleanup.genes</span> (<span class="at">input=</span>sc.dat,</span>
+<span id="cb15-4"><a href="an-example-of-using-bayesprism.html#cb15-4" tabindex="-1"></a>                                  <span class="at">input.type=</span><span class="st">&quot;count.matrix&quot;</span>,</span>
+<span id="cb15-5"><a href="an-example-of-using-bayesprism.html#cb15-5" tabindex="-1"></a>                                    <span class="at">species=</span><span class="st">&quot;hs&quot;</span>, </span>
+<span id="cb15-6"><a href="an-example-of-using-bayesprism.html#cb15-6" tabindex="-1"></a>                                    <span class="at">gene.group=</span><span class="fu">c</span>(</span>
+<span id="cb15-7"><a href="an-example-of-using-bayesprism.html#cb15-7" tabindex="-1"></a>                                      <span class="st">&quot;Rb&quot;</span>,<span class="st">&quot;Mrp&quot;</span>,<span class="st">&quot;other_Rb&quot;</span>,<span class="st">&quot;chrM&quot;</span>,<span class="st">&quot;MALAT1&quot;</span>,<span class="st">&quot;chrX&quot;</span>,<span class="st">&quot;chrY&quot;</span>) ,</span>
+<span id="cb15-8"><a href="an-example-of-using-bayesprism.html#cb15-8" tabindex="-1"></a>                                    <span class="at">exp.cells=</span><span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## EMSEMBLE IDs detected.
+## number of genes filtered in each category: 
+##       Rb      Mrp other_Rb     chrM   MALAT1     chrX     chrY 
+##       89       78     1011       37        1     2464      594 
+## A total of  4214  genes from Rb Mrp other_Rb chrM MALAT1 chrX chrY  have been excluded 
+## A total of  29656  gene expressed in fewer than  5  cells have been excluded</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="an-example-of-using-bayesprism.html#cb17-1" tabindex="-1"></a>sc.dat.filtered.pc <span class="ot">&lt;-</span>  <span class="fu">select.gene.type</span> (sc.dat.filtered,</span>
+<span id="cb17-2"><a href="an-example-of-using-bayesprism.html#cb17-2" tabindex="-1"></a>                                        <span class="at">gene.type =</span> <span class="st">&quot;protein_coding&quot;</span>)</span></code></pre></div>
+<pre><code>## EMSEMBLE IDs detected.
+## number of genes retained in each category: 
+## 
+## protein_coding 
+##          15052</code></pre>
+</div>
+<div id="construct-prism-object" class="section level3">
+<h3>2.3 Construct Prism object</h3>
+<p>This step is to construct a Prism object. The reference parameter is scRNA_seq, while mixture refers to bulk samples. There are two options for parameter input.type: “count.matrix” and “GEP”(Gene Expression Profile). “GEP” is used when using reference derived from other assays, such as sorted bulk data.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="an-example-of-using-bayesprism.html#cb19-1" tabindex="-1"></a>myPrism <span class="ot">&lt;-</span> <span class="fu">new.prism</span>(</span>
+<span id="cb19-2"><a href="an-example-of-using-bayesprism.html#cb19-2" tabindex="-1"></a>  <span class="at">reference=</span>sc.dat.filtered.pc, </span>
+<span id="cb19-3"><a href="an-example-of-using-bayesprism.html#cb19-3" tabindex="-1"></a>  <span class="at">mixture=</span>bk.dat,</span>
+<span id="cb19-4"><a href="an-example-of-using-bayesprism.html#cb19-4" tabindex="-1"></a>  <span class="at">input.type=</span><span class="st">&quot;count.matrix&quot;</span>, </span>
+<span id="cb19-5"><a href="an-example-of-using-bayesprism.html#cb19-5" tabindex="-1"></a>  <span class="at">cell.type.labels =</span> cell.type.labels[<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>], </span>
+<span id="cb19-6"><a href="an-example-of-using-bayesprism.html#cb19-6" tabindex="-1"></a>  <span class="at">cell.state.labels =</span> cell.state.labels[<span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span>],</span>
+<span id="cb19-7"><a href="an-example-of-using-bayesprism.html#cb19-7" tabindex="-1"></a>  <span class="at">key=</span><span class="st">&quot;tumor&quot;</span>,</span>
+<span id="cb19-8"><a href="an-example-of-using-bayesprism.html#cb19-8" tabindex="-1"></a>  <span class="at">outlier.cut=</span><span class="fl">0.01</span>,</span>
+<span id="cb19-9"><a href="an-example-of-using-bayesprism.html#cb19-9" tabindex="-1"></a>    <span class="at">outlier.fraction=</span><span class="fl">0.1</span>,</span>
+<span id="cb19-10"><a href="an-example-of-using-bayesprism.html#cb19-10" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="run-bayesprism-model" class="section level3">
+<h3>2.4 Run BayesPrism model</h3>
+<p>Due to the large number of genes, the model is run on the BayesPrism Gateway, a platform that the author of this model provide to run the model on a high-performance computing server.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="an-example-of-using-bayesprism.html#cb20-1" tabindex="-1"></a><span class="co">#bp.res &lt;- run.prism(prism = myPrism, n.cores=50)</span></span>
+<span id="cb20-2"><a href="an-example-of-using-bayesprism.html#cb20-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&#39;out.rdata&#39;</span>)</span>
+<span id="cb20-3"><a href="an-example-of-using-bayesprism.html#cb20-3" tabindex="-1"></a><span class="fu">ls</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;a&quot;                  &quot;ab&quot;                 &quot;bk.dat&quot;            
+##  [4] &quot;bk.stat&quot;            &quot;bp&quot;                 &quot;bp.K4&quot;             
+##  [7] &quot;cell.state.labels&quot;  &quot;cell.type.labels&quot;   &quot;sc.dat&quot;            
+## [10] &quot;sc.dat.filtered&quot;    &quot;sc.dat.filtered.pc&quot; &quot;sc.stat&quot;</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="an-example-of-using-bayesprism.html#cb22-1" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">get.fraction</span> (<span class="at">bp=</span>bp,</span>
+<span id="cb22-2"><a href="an-example-of-using-bayesprism.html#cb22-2" tabindex="-1"></a>            <span class="at">which.theta=</span><span class="st">&quot;final&quot;</span>,</span>
+<span id="cb22-3"><a href="an-example-of-using-bayesprism.html#cb22-3" tabindex="-1"></a>            <span class="at">state.or.type=</span><span class="st">&quot;type&quot;</span>)</span>
+<span id="cb22-4"><a href="an-example-of-using-bayesprism.html#cb22-4" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="an-example-of-using-bayesprism.html#cb22-5" tabindex="-1"></a>theta</span></code></pre></div>
+<pre><code>##                                  tumor    myeloid    pericyte endothelial
+## TCGA.06.2563.01A.01R.1849.01 0.8186790 0.04279918 0.053624517  0.07178643
+## TCGA.06.0749.01A.01R.1849.01 0.7091339 0.16821785 0.002312599  0.02174197
+## TCGA.06.5418.01A.01R.1849.01 0.8402334 0.10165855 0.018795345  0.02768397
+## TCGA.06.0211.01B.01R.1849.01 0.8595931 0.04885699 0.026581610  0.05856854
+## TCGA.19.2625.01A.01R.1850.01 0.9035943 0.04286868 0.021992987  0.01747545
+##                                     tcell       oligo
+## TCGA.06.2563.01A.01R.1849.01 1.104510e-04 0.013000472
+## TCGA.06.0749.01A.01R.1849.01 1.167877e-04 0.098476896
+## TCGA.06.5418.01A.01R.1849.01 5.696487e-07 0.011628168
+## TCGA.06.0211.01B.01R.1849.01 4.678032e-06 0.006395092
+## TCGA.19.2625.01A.01R.1850.01 5.590343e-07 0.014068065</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="an-example-of-using-bayesprism.html#cb24-1" tabindex="-1"></a><span class="fu">rowSums</span>(theta)</span></code></pre></div>
+<pre><code>## TCGA.06.2563.01A.01R.1849.01 TCGA.06.0749.01A.01R.1849.01 
+##                            1                            1 
+## TCGA.06.5418.01A.01R.1849.01 TCGA.06.0211.01B.01R.1849.01 
+##                            1                            1 
+## TCGA.19.2625.01A.01R.1850.01 
+##                            1</code></pre>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="index.html"><button class="btn btn-default">Previous</button></a>
+<a href="bayesprism-for-our-simulation-data.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
